@@ -72,13 +72,26 @@ static void skeletonDaemon()
 
 int main()
 {
-    int Eleven_Hour, FiftyNine_Minutes;
+    int Backup_Hour, Backup_Minutes;
+    char answer[10];
+    char yes1[]="yes";
+    char yes2[] = "Yes";
     
-    Eleven_Hour = 23;
-    FiftyNine_Minutes = 59;
+    Backup_Hour = 23;
+    Backup_Minutes = 59;
     
     FILE *fptr1, *fptr2;
     char filename1[300], filename2[300], c;
+    printf("\nWould you live to change the backup/transfer time?\n");
+    scanf("%s", &answer);
+    
+    if(strcmp(answer, yes1) == 0 || strcmp(answer, yes2) == 0){
+        printf("\n\nPlease enter backup/transfer hour:\n");
+        scanf("%d", &Backup_Hour);
+        printf("\nPlease enter backup/transfer minutes:\n");
+        scanf("%d", &Backup_Minutes);
+        printf("\n\nThank You\nBackup/Tranfer time has been updated\n\n");
+   }
     
     strcpy(filename1, "/Users/Jake/Library/Mobile\ Documents/com\~apple\~CloudDocs/DT282/Year\ 4/Modules/Semester\ 2/Systems\ Software/Assignments/Offline/var/www/html.txt");
     
@@ -94,7 +107,7 @@ int main()
         time(&now);
         right_now=localtime(&now);
 
-        if(Eleven_Hour == right_now->tm_hour & FiftyNine_Minutes == right_now->tm_min){
+        if(Backup_Hour == right_now->tm_hour & Backup_Minutes == right_now->tm_min){
             // Open one file for reading
             fptr1 = fopen(filename1, "r");
             if (fptr1 == NULL)
