@@ -1,0 +1,10 @@
+CC=gcc
+objects = BackupFileDaemon.o BlockWriteDaemon.o MessageQueue.o TrackChanges.o 
+
+myprog : $(objects)
+	$(CC) -o prog $(objects) -lm
+
+
+clean: 
+	rm prog BackupFileDaemon.o BlockWriteDaemon.o MessageQueue.o TrackChanges.o 
+

@@ -76,13 +76,15 @@ int main()
     char answer[10];
     char yes1[]="yes";
     char yes2[] = "Yes";
+    char child1[] = "TrackChanges.exe";
+    char child2[BUFSIZ];
     
     Backup_Hour = 23;
     Backup_Minutes = 59;
     
     FILE *fptr1, *fptr2;
     char filename1[300], filename2[300], c;
-    printf("\nWould you live to change the backup/transfer time?\n");
+    printf("\nWould you like to change the backup/transfer time?\n");
     scanf("%s", &answer);
     
     if(strcmp(answer, yes1) == 0 || strcmp(answer, yes2) == 0){
@@ -103,6 +105,14 @@ int main()
     {
         //TODO: Insert daemon code here.
         syslog (LOG_NOTICE, "Backup File Daemon Started");
+        
+        system("TrackChanges.exe");
+        system(child1);
+        
+        strcpy(child2, "child.exe");
+        strcat(child2, "-aparm -b");
+        printf("Tracking Changes: Updating the modification history file");
+        system(child2);
         
         time(&now);
         right_now=localtime(&now);

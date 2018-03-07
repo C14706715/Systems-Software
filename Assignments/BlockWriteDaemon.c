@@ -15,6 +15,7 @@
 #include <sys/stat.h>
 #include <syslog.h>
 #include <time.h>
+
 time_t now;
 struct tm *right_now;
 
@@ -75,8 +76,8 @@ int main()
 {
     int Eleven_Hour, Fifty_Minutes, Zero_Hour, Ten_Minutes;
     
-    Eleven_Hour = 23;
-    Fifty_Minutes = 50;
+    Eleven_Hour = 15;
+    Fifty_Minutes = 02;
     Zero_Hour = 00;
     Ten_Minutes = 10;
     
@@ -96,8 +97,31 @@ int main()
 
             if(Eleven_Hour == right_now->tm_hour & Fifty_Minutes == right_now->tm_min){
                 printf("Folder Changed to Read Only Access");
+                
+                FILE *fp;
+                fp = fopen("/Users/Jake/Library/Mobile\ Documents/com\~apple\~CloudDocs/DT282/Year\ 4/Modules/Semester\ 2/Systems\ Software/Assignments/LogFile.txt","a");
+
+                time_t now;
+                time(&now);/* get current time; same as: now = time(NULL)  */ 
+
+                char *buf2;
+                buf2=(char *)malloc(10*sizeof(char));
+                buf2=getlogin(); // get user logged in
+                printf("\n %s \n",buf);
+
+                if(fp == NULL) {
+                    printf("Error opening file");
+                    exit(1);
+                }
+
+                fprintf(fp,"\nModification\n\n");
+                fprintf(fp,"Time    : %s\n", ctime(&now));
+                fprintf(fp,"Status  : %s\n", "Successful - Read Only");
+                fprintf(fp,"User    : %s\n\n\n",buf2);
+                fclose(fp);
+                
                 i = strtol(Read_Mode, 0, 8);
-                if (chmod (buf,i) < 0)
+                if (chmod (buf2, i) < 0)
                 {
                     exit(1);
                 }
@@ -105,6 +129,30 @@ int main()
             }
             else if(Zero_Hour == right_now->tm_hour & Ten_Minutes == right_now->tm_min){
                 printf("Folder Changed to Write access");
+                
+                FILE *fp;
+                fp = fopen("/Users/Jake/Library/Mobile\ Documents/com\~apple\~CloudDocs/DT282/Year\ 4/Modules/Semester\ 2/Systems\ Software/Assignments/LogFile.txt","a");
+
+                time_t now;
+                time(&now);/* get current time; same as: now = time(NULL)  */ 
+
+                char *buf2;
+                buf2=(char *)malloc(10*sizeof(char));
+                buf2=getlogin(); // get user logged in
+                printf("\n %s \n",buf);
+
+                if(fp == NULL) {
+                    printf("Error opening file");
+                    exit(1);
+                }
+
+                fprintf(fp,"\nModification");
+                fprintf(fp,"Time    : %s\n",ctime(&now));
+                fprintf(fp,"Status  : %s\n", "Successful - Write Only");
+                fprintf(fp,"User    : %s\n",buf2);
+                fclose(fp);
+                
+                
                 i = strtol(Write_Mode, 0, 8);
                 if (chmod (buf,i) < 0)
                 {
@@ -116,6 +164,9 @@ int main()
         sleep (20);
        
     }
+    
+    
+    
 
     syslog (LOG_NOTICE, "Permission daemon terminated.");
     closelog();

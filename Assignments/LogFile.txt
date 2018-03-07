@@ -1,0 +1,13 @@
+
+-----New-Entry-----Time    : Wed Mar  7 14:59:16 2018
+
+Status  : Successful
+Message : Connected
+User    : Jake
+
+-------------------
+ModificationTime    : Wed Mar  7 15:02:15 2018
+
+Status  : Successful
+Message : Connected
+User    : Jake
